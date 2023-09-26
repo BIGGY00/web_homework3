@@ -2,7 +2,7 @@ const util = require("util");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '/uploads/'));
+    cb(null, __dirname, '/uploads/');
   },
   filename: (req, file, cb) => {
     const extArray = file.mimetype.split("/");
