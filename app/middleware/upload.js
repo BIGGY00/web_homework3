@@ -2,7 +2,7 @@ const util = require("util");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __dirname, '/uploads/');
+    cb(null, __dirname + '/uploads/'); // Concatenate the directory path correctly
   },
   filename: (req, file, cb) => {
     const extArray = file.mimetype.split("/");
@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
     cb(null, newFileName);
   },
 });
+
 
 const uploadFile = multer({ storage: storage }).single("singlefile");
 const uploadFileMiddleware = util.promisify(uploadFile);
