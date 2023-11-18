@@ -51,7 +51,8 @@ User.loginModel = (account, result)=>{
         if(res.length){
             const validPassword = bcrypt.compareSync(account.password, res[0].password);
             if(validPassword){
-                const token = jwt.sign({id: res.insertId}, scKey.secret, {expiresIn: expireTime});
+                // const token = jwt.sign({id: res.insertId}, scKey.secret, {expiresIn: expireTime});
+                const token = jwt.sign({id: res[0].id}, scKey.secret, {expiresIn: expireTime});
                 console.log("Login success. Token: " + token);
                 res[0].accessToken = token;
                 result(null, res[0]);
