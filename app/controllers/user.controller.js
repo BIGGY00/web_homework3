@@ -96,24 +96,17 @@ const updateUserCtrl = (req, res)=>{
     });
 };
 
-const deleteUser = (req, res)=>{
-    console.log("parameters: " + req.params.id + 
-    ", " + req.params.p1 + 
-    ", " + req.params.p2);
-    User.removeUser(req.params.id, (err, result)=>{
-        if(err){
-            if(err.kind == "not_found"){
-                res.status(401).send(
-                    {message: "Not found user: " + req.params.id}
-                    );
+const deleteUser = (req, res) => {
+    const id = req.params.id;
+    User.removeUser(id, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({ message: `User with id ${id} not found` });
+            } else {
+                res.status(500).send({ message: `Could not delete user with id ${id}` });
             }
-            else{
-                res.status(500).send(
-                    {message: "Error delete user: " + req.params.id}
-                    );
-            }
-        }else{
-            res.send(result);
+        } else {
+            res.send(data);
         }
     });
 };
